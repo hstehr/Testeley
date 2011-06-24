@@ -1,0 +1,14 @@
+Testeley - Testing the Mendeley API
+-----------------------------------
+
+Description
+
+Some PHP scripts to test the public
+API of the Mendeley scientific
+literature management system.
+
+Installation
+
+1. Copy the files to a PHP enabled webserver
+2. Adjust the settings in config.inc.php
+3. Point your browser at index.php
