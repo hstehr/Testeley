@@ -11,7 +11,8 @@
 # HS 2011-06-14
 ##########################################################
 
-include_once('Paper.php');
+require_once('Paper.php');
+require_once('functions.inc.php');
 
 class Mendeley {
 	
@@ -42,7 +43,7 @@ class Mendeley {
 		  $uuids = Array();
 		  if(isset($res["documents"])) {
 			  foreach($res["documents"] as $doc) {
-			    if(isset($doc["uuid"]) && strlen($doc["uuid"]) == 36) {
+			    if(isset($doc["uuid"]) && is_uuid($doc["uuid"])) {
 			    	$uuids[] = $doc["uuid"];
 			    	#var_dump($doc["uuid"]);
 			    }
@@ -68,12 +69,12 @@ class Mendeley {
 		$res=json_decode($json,true);
   		$paper = new Paper($uuid);
   		if(isset($res["authors"])) $paper->authors = $res["authors"];
-  		if(isset($res["title"])) $paper->title = $res["title"];
-  		if(isset($res["year"])) $paper->year = $res["year"];
-		if(isset($res["publication_outlet"])) $paper->journal = $res["publication_outlet"];
-		if(isset($res['mendeley_url'])) $paper->mendeley_url = $res['mendeley_url'];
+  		if(isset($res["title"])) $paper->title = htmlentities($res["title"]);
+  		if(isset($res["year"])) $paper->year = htmlentities($res["year"]);
+		if(isset($res["publication_outlet"])) $paper->journal = htmlentities($res["publication_outlet"]);
+		if(isset($res['mendeley_url']) && is_mendeley_url($res['mendeley_url'])) $paper->mendeley_url = $res['mendeley_url'];
 		if(isset($res['identifiers'])) {
-			if(isset($res['identifiers']['pmid'])) $paper->pmid = $res['identifiers']['pmid'];
+			if(isset($res['identifiers']['pmid']) && is_pmid($res['identifiers']['pmid'])) $paper->pmid = $res['identifiers']['pmid'];
 		}
 		return $paper;
 	}
@@ -92,13 +93,37 @@ class Mendeley {
 	function get_related_uuids($uuid) {
 		$json = $this->fetch_related($uuid);
 		$res=json_decode($json,true);
+		$uuids = Array();
 		foreach($res["documents"] as $doc) {
-		    if(isset($doc["uuid"]) && strlen($doc["uuid"]) == 36) {
+		    if(isset($doc["uuid"]) && is_uuid($doc["uuid"])) {
 		    	$uuids[] = $doc["uuid"];
-		    	#var_dump($doc["uuid"]);
 		    }
 		  }
 		return $uuids;
 	}
+	
+	# fetch papers by author name
+	# returns the raw json response
+	function fetch_docs_by_author($author) {
+		$api="http://api.mendeley.com/oapi/documents/authored/%s/?consumer_key=%s";
+		$url=sprintf($api,$author,$this->consumer_key);
+  		$json=file_get_contents($url);
+  		return $json;
+	}
+	
+	# get papers by author name
+	# returns an array of uuids
+	function get_uuids_by_author($author) {
+		$json = $this->fetch_docs_by_author($author);
+		$res=json_decode($json,true);
+		$uuids = Array();
+		foreach($res["documents"] as $doc) {
+		    if(isset($doc["uuid"]) && is_uuid($doc["uuid"])) {
+		    	$uuids[] = $doc["uuid"];
+		    }
+		  }
+		return $uuids;
+	}
+	
 }
 ?>

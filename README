@@ -3,12 +3,40 @@ Testeley - Testing the Mendeley API
 
 Description
 
-Some PHP scripts to test the public
-API of the Mendeley scientific
-literature management system.
+Some PHP scripts to test the public API of the Mendeley
+scientific literature management system.
 
 Installation
 
 1. Copy the files to a PHP enabled webserver
 2. Adjust the settings in config.inc.php
 3. Point your browser at index.php
+
+Notes
+
+You need an API key which can be obtained from Mendeley.
+PHP5 and support for Sqlite is required.
+
+Development
+
+The main functionality is in the classes:
+
+Mendeley.php		connection to the Mendeley API
+Paper.php		data class holding paper details
+LitDb.php		connection to local database
+
+The scripts that allow user interactions are:
+
+details.php		show details about a paper
+author.php		show publications by author
+related.php		show related publications (as defined by Mendeley)
+group.php		show papers in a public group
+db.php			show contents of the 'documents' table of the local database
+sim.db			show contents of the 'similarities' table of the local database
+
+Acknowledgements
+
+The button code and background images were found here:
+http://www.oscaralexander.com/tutorials/how-to-make-sexy-buttons-with-css.html
+http://www.oscaralexander.com/tutorials/img/bg_button_span.gif
+http://www.oscaralexander.com/tutorials/img/bg_button_a.gif

@@ -1,0 +1,77 @@
+
+body {
+	padding: 5px;
+	font: normal 15px arial, sans-serif; 	
+}
+
+a:link {text-decoration: none}
+a:visited {text-decoration: none}
+a:active {text-decoration: none}
+a:hover {text-decoration: underline; color: blue;}
+
+h2 {
+	color: #bbbbbb;
+}
+
+.help li {
+	margin-left: -20px;
+	color: gray;
+}
+
+.paper {
+	font: normal 15px arial, sans-serif; 
+	padding: 5px; 
+	background: white;
+	width: 900px; 
+	-moz-box-shadow: 0 0 5px black; 
+	-webkit-box-shadow: 0 0 5px black; 
+	box-shadow: 0 0 5px black; 
+}
+
+.paper .title {
+	font: normal 17px arial, sans-serif;	
+}
+
+.authors a:link {text-decoration: none}
+.authors a:visited {text-decoration: none}
+.authors a:active {text-decoration: none}
+.authors a:hover {text-decoration: underline; color: blue;}
+
+.paper_actions {
+	margin-top: 5px;
+}
+
+.clear { /* generic container (i.e. div) for floating buttons */
+    overflow: hidden;
+    width: 100%;
+}
+
+a.button {
+    background: transparent url('bg_button_a.gif') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+}
+
+a.button span {
+    background: transparent url('bg_button_span.gif') no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+
+a.button:active {
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.button:active span {
+    background-position: bottom left;
+    padding: 6px 0 4px 18px; /* push text down 1px */
+}
